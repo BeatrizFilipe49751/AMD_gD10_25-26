@@ -1,0 +1,16 @@
+--==============
+-- DB connection
+--==============
+\set dataBase medknown_db
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+
+--==========================
+-- Output files
+--==========================
+
+\COPY (SELECT * FROM dataset_3row) TO 'datasets/dataset_3row_orange.tab' WITH (FORMAT csv, DELIMITER E'\t', HEADER true);
+\COPY (SELECT * FROM dataset) TO 'datasets/dataset.csv' WITH (FORMAT csv, HEADER true);

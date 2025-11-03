@@ -1,0 +1,11 @@
+agegroup,gender,prescription,astigmatic,tearrate
+young,F,myope,no,normal
+young,M,hypermetrope,yes,reduced
+pre-presbyopic,F,myope,no,reduced
+pre-presbyopic,M,hypermetrope,yes,normal
+presbyopic,F,,yes,reduced
+presbyopic,M,myope,yes,normal
+presbyopic,F,hypermetrope,no,normal
+young,M,,no,reduced
+pre-presbyopic,F,myope,yes,normal
+presbyopic,M,hypermetrope,no,reduced

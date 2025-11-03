@@ -1,3 +1,18 @@
+--==============
+-- DB Connection
+--==============
+\set dataBase medknown_db
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+
+--==========================
+-- Create the views
+--==========================
+
 CREATE VIEW dataset AS
 SELECT
     c.ageGroup,
