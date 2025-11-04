@@ -1,0 +1,8 @@
+{
+    "attribute": "astigmatism",
+    "rule": {
+        "yes": "none",
+        "no": "soft"
+    },
+    "accuracy": 0.6875
+}
