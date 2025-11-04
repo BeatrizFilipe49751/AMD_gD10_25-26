@@ -10,10 +10,10 @@
 
 ## Project Goal
 
-The purpose of this project is to **explore the relationship between data, information, and knowledge**, and to apply data-mining and machine learning techniques to transition from raw data to actionable insights.
+The purpose of this project is to **explore the relationship between data, information, and knowledge**, and to apply data-mining and machine learning techniques to transition from raw data to valuable insights.
 
 In this specific scenario, the **MedKnow** medical center aims to extract useful patterns from historical ophthalmology data to support **diagnosis** and **prescription**.
-The **SoftKnow** team (student group) developed this prototype as a deployable solution to analyze and classify patient data using **1R**, **ID3**, and **Naive Bayes** models.
+The **SoftKnow** team (our group) developed this prototype as a deployable solution to analyze and classify patient data using **1R**, **ID3**, and **Naive Bayes** models.
 
 ---
 
