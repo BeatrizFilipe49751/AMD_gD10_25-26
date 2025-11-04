@@ -1,3 +1,9 @@
+"""
+Configuration file defining default paths for datasets, models, and artifacts.
+
+All paths are relative to the project root (one level up from this file).
+"""
+
 import os
 
 # Go one directory up from /python to reach project root
@@ -7,7 +13,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "artifacts")
 DATASETS_DIR = os.path.join(BASE_DIR, "scripts/datasets")
 
+# Make sure directory exists
+os.makedirs(ARTIFACTS_DIR, exist_ok=True)
+
 # Files
+ONER_MODEL_PATH = os.path.join(ARTIFACTS_DIR, "oner_model.pkl")
 ID3_MODEL_PATH = os.path.join(ARTIFACTS_DIR, "id3_model.pkl")
 NB_MODEL_PATH = os.path.join(ARTIFACTS_DIR, "nb_model.pkl")
 FEATURE_ENCODERS_PATH = os.path.join(ARTIFACTS_DIR, "feature_encoders.pkl")
