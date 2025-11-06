@@ -196,6 +196,6 @@ feature_1 | feature_2 | ... | 1R_prediction | ID3_prediction | NB_prediction
 ## Authors
 
 * Beatriz Filipe, 49751
-* *[Nome, nr]*
+* Ana Assis, 53537
 
 **Technologies:** Python, PostgreSQL, Pandas, scikit-learn, Orange Data Mining
