@@ -10,22 +10,23 @@
 
 ## Project Goal
 
-The purpose of this project is to **explore the relationship between data, information, and knowledge**, and to apply data-mining and machine learning techniques to transition from raw data to valuable insights.
+The purpose of this project is to explore the relationship between data, information, and knowledge, demonstrating how raw data can be transformed into useful insights through data mining and machine learning techniques.
 
-In this specific scenario, the **MedKnow** medical center aims to extract useful patterns from historical ophthalmology data to support **diagnosis** and **prescription**.
-The **SoftKnow** team (our group) developed this prototype as a deployable solution to analyze and classify patient data using **1R**, **ID3**, and **Naive Bayes** models.
+In this scenario, the MedKnow medical center aims to analyze ophthalmology data collected over time to extract patterns supporting diagnosis and prescription.
+The SoftKnow team (our group) developed a deployable prototype that fulfills both operational and strategic needs, by applying 1R, ID3, and Naive Bayes classifiers to the “lenses” dataset.
 
 ---
 
 ## Implemented Components
 
 1. **Data Analysis & Assumptions** – based on `d01_lenses.xls`, assumptions were made about MedKnow’s operational workflow involving patients, doctors, and diseases.
-2. **Database Setup** – implemented relational schema and scripts to create, populate, and export the dataset automatically.
-3. **Machine Learning Models** – implemented three algorithms:
-   * **One Rule (1R)**
+2. **Database & Data Export** – implemented scripts to create, populate, and export data from a simulated relational database.
+3. **Machine Learning Models** – implemented and trained three classification algorithms:
+   * **One Rule (1R)** - custom implementation in Python
    * **ID3 Decision Tree**
    * **Naive Bayes**
 4. **Evaluation & Comparison** – all models evaluated on accuracy and reliability to determine the best approach.
+5. **Deployable Prediction Modules** – modular prediction scripts for each model, enabling MedKnow to classify new patient data without retraining.
 
 ---
 
@@ -33,30 +34,33 @@ The **SoftKnow** team (our group) developed this prototype as a deployable solut
 
 ```
 project-root/
-├── docs/                      # Project report and EA diagram
-├── artifacts/                 # Trained models, encoders, and test data
+├── docs/                           # Project report and EA diagram
+├── artifacts/                      # Trained models, encoders, and test data
 ├── scripts/
 │   ├── datasets/
 │   │   ├── dataset.csv
 │   │   └── dataset_3row_orange.tab
-│   ├── _go00.bat              # Create database
-│   ├── _go01.bat              # Create schema
-│   ├── _go02.bat              # Populate schema
-│   ├── _go03.bat              # Create view
-│   ├── _go04.bat              # Export data to CSV
+│   ├── _go00.bat                   # Create database
+│   ├── _go01.bat                   # Create schema
+│   ├── _go02.bat                   # Populate schema
+│   ├── _go03.bat                   # Create view
+│   ├── _go04.bat                   # Export data to CSV
 │   └── ...
 ├── python/
-│   ├── config.py              # Configuration paths and constants
-│   ├── preprocessing.py       # Data preprocessing (encoding, splitting)
-│   ├── train_and_save.py      # Train 1R, ID3, and NB models
-│   ├── evaluate_models.py     # Evaluate and compare model performance
-│   ├── predict_medknow.py     # Make predictions on unseen data
-│   ├── load_models.py         # Load trained models for inference
+│   ├── train_and_save.py           # Train 1R, ID3, and NB models
+│   ├── evaluate_models.py          # Evaluate and compare model performance
+│   ├── predictions/
+│   │   ├── predict_1R.py           # Predict using trained 1R model
+│   │   └── predict_classifiers.py  # Predict using trained ID3 and NB models
+│   ├── utils/
+│   │   ├── config.py               # Default paths (artifacts, datasets)
+│   │   ├── preprocessing.py        # Data preprocessing (encoding, splitting)
+│   │   ├── load_models.py          # Load trained models
+│   │   └── transform_new_data.py   # Transform new samples for prediction
 │   └── models/
-│       ├── one_rule.py
-│       ├── train_id3.py
-│       ├── train_nb.py
-│       └── ...
+│       ├── one_rule.py             # 1R algorithm implementation
+│       ├── train_id3.py            # ID3 training
+│       └── train_nb.py             # Naive Bayes training
 └── README.md
 ```
 
@@ -78,7 +82,8 @@ pip install pandas scikit-learn numpy
 
 ## Database Initialization
 
-To prepare and export the dataset, execute the batch scripts in the following order:
+The /scripts folder contains batch scripts to create and populate the MedKnow database.
+Execute them in order:
 
 ```bash
 .\_go00.bat
@@ -88,7 +93,7 @@ To prepare and export the dataset, execute the batch scripts in the following or
 .\_go04.bat
 ```
 
-These scripts will:
+These scripts:
 1. Create and initialize the database.
 2. Create and populate the schema with sample data.
 3. Create necessary views.
@@ -98,44 +103,33 @@ These scripts will:
 
 ## Model Training
 
-To (re)train and save models:
+To (re)train all models (1R, ID3, and Naive Bayes):
 
 ```bash
-cd python
-python train_and_save.py <target_column> [optional_dataset_path]
+python -m python.train_and_save.py <target_column>
 ```
 
-Examples:
-
-Use the default dataset defined in config.py:
+Example:
 ```bash
-cd python
-python train_and_save.py lenses
-```
-
-Or specify a custom CSV file:
-```bash
-cd python
-python train_and_save.py lenses ../scripts/datasets/custom_dataset.csv
+python -m python.train_and_save.py lenses
 ```
 
 This script:
-* Loads and preprocesses the dataset.
-* Trains 1R, ID3, and Naive Bayes models.
-* Saves models, encoders, and test sets in `/artifacts`.
+1. Load and preprocess the dataset.
+2. Train all three models.
+3. Saves models, encoders, and test sets in `/artifacts`.
 
 ---
 
 ## Model Evaluation
 
-To evaluate model accuracy and reliability:
+To evaluate all trained models:
 
 ```bash
-cd python
-python evaluate_models.py
+python -m python.evaluate_models.py
 ```
 
-This will display:
+Displays:
 * Accuracy scores
 * Confusion matrices
 * Classification reports
@@ -144,27 +138,40 @@ This will display:
 
 ---
 
-## Solution - Making Predictions (MedKnow usage)
+## Making Predictions (Deployment / MedKnow usage)
 
-With the models trained and stored in /artifacts, MedKnow can use them directly to predict new patient cases — no retraining required.
-To classify new samples from a CSV file:
+With the models trained and stored in /artifacts, MedKnow can use them directly for predictions, no retraining required.
+
+Predict using 1R:
 
 ```bash
-cd python
-python predict_medknow.py <path_to_csv>
+python -m python.predictions.predict_1R <path_to_csv>
 ```
 
 Example:
 
 ```bash
-cd python
-python predict_medknow.py new_samples.csv
+python -m python.predictions.predict_1R new_lenses_data.csv
 ```
 
-Outputs predicted classes for each model:
+Output:
+A DataFrame printed to console:
 
 ```
-feature_1 | feature_2 | ... | 1R_prediction | ID3_prediction | NB_prediction
+feature_1 | feature_2 | ... | 1R_prediction
+```
+
+Predict using ID3 and Naive Bayes:
+
+```bash
+python -m python.predictions.predict_classifiers <path_to_csv>
+```
+
+Output:
+A DataFrame printed to console:
+
+```
+feature_1 | feature_2 | ... | ID3_prediction | NB_prediction
 ```
 
 ---
@@ -178,18 +185,7 @@ feature_1 | feature_2 | ... | 1R_prediction | ID3_prediction | NB_prediction
 | `nb_model.pkl`             | Trained Naive Bayes model         |
 | `feature_encoders.pkl`     | Encoders for categorical features |
 | `target_encoder.pkl`       | Encoder for target variable       |
-| `X_test.csv`, `y_test.csv` | Test data used for evaluation     |
-
----
-
-## Summary of Commands
-
-| Task                | Command                                    |
-| ------------------- | ------------------------------------------ |
-| Initialize database | `.\_go00.bat → .\_go04.bat`                |
-| Train models        | `python train_and_save.py <target_column>` |
-| Evaluate models     | `python evaluate_models.py`                |
-| Predict new data    | `python predict_medknow.py <csv>`         |
+| `X_test.csv`, `y_test.csv` | Test data for evaluation          |
 
 ---
 

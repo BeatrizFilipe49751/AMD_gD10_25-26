@@ -1,8 +1,8 @@
 import time
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import pandas as pd
-from load_models import load_models
-import config
+from .utils.load_models import load_1R, load_id3_nb, load_encoders
+from .utils import config
 
 def evaluate_models(oner_model, id3_model, nb_model, target_encoder, X_test_path: str, y_test_path: str) -> None:
     """
@@ -100,7 +100,7 @@ def summarize_results(results: list[dict]) -> None:
 
 
 if __name__ == "__main__":
-    oner_model, id3_model, nb_model, feature_encoders, target_encoder = load_models(
-        config.ONER_MODEL_PATH, config.ID3_MODEL_PATH, config.NB_MODEL_PATH, config.FEATURE_ENCODERS_PATH, config.TARGET_ENCODER_PATH)
-
+    oner_model = load_1R() 
+    id3_model, nb_model = load_id3_nb()
+    feature_encoders, target_encoder = load_encoders()
     evaluate_models(oner_model, id3_model, nb_model, target_encoder, config.X_TEST_PATH, config.Y_TEST_PATH)

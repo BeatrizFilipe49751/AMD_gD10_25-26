@@ -1,13 +1,13 @@
 """
 Configuration file defining default paths for datasets, models, and artifacts.
 
-All paths are relative to the project root (one level up from this file).
+All paths are relative to the project root.
 """
 
 import os
 
-# Go one directory up from /python to reach project root
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# to reach project root
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Define subdirectories relative to the project root
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "artifacts")

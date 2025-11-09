@@ -2,15 +2,15 @@ import pickle
 import sys
 import pandas as pd
 # Import model training functions
-from models.train_id3 import train_id3
-from models.train_nb import train_nb
-from models.one_rule import OneRuleClassifier
+from .models.train_id3 import train_id3
+from .models.train_nb import train_nb
+from .models.one_rule import OneRuleClassifier
 # Import preprocessing and configuration paths
-from preprocessing import preprocess_data
-import config
+from .utils.preprocessing import preprocess_data
+from .utils import config
 
 
-def train_and_save_models(dataset_path: str, target_column: str):
+def train_and_save_models(target_column: str):
     """
     Train multiple models (1R, ID3, Naive Bayes) and save them along with their encoders and test data.
     
@@ -23,11 +23,10 @@ def train_and_save_models(dataset_path: str, target_column: str):
     3. Save trained models, encoders, and test sets as pickled files or CSVs.
 
     Args:
-        dataset_path: Path to the CSV dataset file.
         target_column: Name of the target variable in the dataset.
     """
     # --- Step 1: Load and preprocess dataset ---
-    df = pd.read_csv(dataset_path)
+    df = pd.read_csv(config.DATASET_PATH)
     X_train, X_test, y_train, y_test, feature_encoders, target_encoder = preprocess_data(df, target_column)
     
     # --- Step 2: Train models ---
@@ -65,10 +64,9 @@ def train_and_save_models(dataset_path: str, target_column: str):
     
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python train_and_save.py <target_column> [optional: <dataset_path>]")
+        print("Usage: python train_and_save.py <target_column>")
         sys.exit(1)
 
     target_column = sys.argv[1]
-    dataset_path = sys.argv[2] if len(sys.argv) > 2 else config.DATASET_PATH
 
-    train_and_save_models(dataset_path, target_column)
+    train_and_save_models(target_column)
