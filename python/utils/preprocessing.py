@@ -1,10 +1,11 @@
+import re
 from typing import Tuple
 from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def preprocess_data(df: pd.DataFrame, target_column: str) -> Tuple[pd.DataFrame, pd.Series, dict, LabelEncoder]:
+def preprocess_data(df: pd.DataFrame, target_column: str, split=True) -> Tuple[pd.DataFrame, pd.Series, dict, LabelEncoder]:
     """
     Preprocess the dataset by encoding categorical features and the target variable,
     and splitting the data into training and testing sets.
@@ -24,6 +25,8 @@ def preprocess_data(df: pd.DataFrame, target_column: str) -> Tuple[pd.DataFrame,
         feature_encoders (dict): Dictionary mapping feature names → LabelEncoder objects
         target_encoder (LabelEncoder): Encoder fitted on the target column
     """
+    # --- 1. Remove rows with invalid target ---
+    df = df[df[target_column].apply(is_valid_value)]
 
     # --- 1. Separate features and target ---
     X = df.drop(columns=[target_column])
@@ -39,10 +42,16 @@ def preprocess_data(df: pd.DataFrame, target_column: str) -> Tuple[pd.DataFrame,
     # --- 4. Encode the target column ---
     y_encoded, target_encoder = encode_target(y)
     
-    # --- 5. Split into training and testing sets ---
-    X_train, X_test, y_train, y_test = train_test_split(X_encoded, y_encoded, test_size=0.3, random_state=42)
-    
-    return X_train, X_test, y_train, y_test, feature_encoders, target_encoder
+    if split:
+        # --- 5. Split into training and testing sets ---
+        X_train, X_test, y_train, y_test = train_test_split(X_encoded, y_encoded, test_size=0.3, random_state=42)
+        return X_train, X_test, y_train, y_test, feature_encoders, target_encoder
+    else:
+        return X_encoded, y_encoded, feature_encoders, target_encoder
+
+def is_valid_value(val: str) -> bool:
+    """Check if the value contains at least one alphanumeric character."""
+    return bool(re.search(r"\w", str(val)))
 
 
 def encode_target(y: pd.Series) -> Tuple[pd.Series, LabelEncoder]:

@@ -25,3 +25,8 @@ TARGET_ENCODER_PATH = os.path.join(ARTIFACTS_DIR, "target_encoder.pkl")
 X_TEST_PATH = os.path.join(ARTIFACTS_DIR, "X_test.csv")
 Y_TEST_PATH = os.path.join(ARTIFACTS_DIR, "y_test.csv")
 DATASET_PATH = os.path.join(DATASETS_DIR, "dataset.csv")
+
+# A1
+DATASETA1_PATH = os.path.join(DATASETS_DIR, "dataset_long_name_ORIGINAL.csv")
+DATASETA1_ORANGE_PATH = os.path.join(DATASETS_DIR, "dataset_long_name_PTS_INPUT_v01.tab")
+ONER_OUTPUT_PATH = os.path.join(ARTIFACTS_DIR, "oneR_OUTPUT.txt")

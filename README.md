@@ -106,12 +106,12 @@ These scripts:
 To (re)train all models (1R, ID3, and Naive Bayes):
 
 ```bash
-python -m python.train_and_save.py <target_column>
+python -m python.train_and_save <target_column>
 ```
 
 Example:
 ```bash
-python -m python.train_and_save.py lenses
+python -m python.train_and_save lenses
 ```
 
 This script:

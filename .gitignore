@@ -1,0 +1,27 @@
+# --- Python compiled files ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Distribution / packaging ---
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- VSCode ---
+.vscode/
+
+# --- PyCharm / IntelliJ ---
+.idea/
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+
+# --- Cache directories ---
+.cache/
