@@ -138,14 +138,14 @@ FROM ( SELECT *
       INNER JOIN
       track AS T2
       ON ( T1.cookie_id = T2.cookie_id )
-WHERE product_gui NOT IN ( 'open', 'home', '/customer/account/login/', '/customer/account/forgotpassword/' )
+WHERE product_gui NOT IN ( 'open', 'home', '/customer/account/login/', '/customer/account/forgotpassword/', 'display.category*homepage', '/customer/account/', '/customer/account/logoutsuccess/' )
 ORDER BY cookie_id, session_id, product_gui  -- commented for final dataset as this may get too resource consuming
 ;
 
 
-SELECT *
-FROM v_export
-;
+--SELECT *
+--FROM v_export
+--;
 
 
 

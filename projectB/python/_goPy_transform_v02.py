@@ -3,13 +3,9 @@
 import csv
 import unicodedata
 
-
-
 #_______________________________________________________________________________
 # remove accentes in an unicode string
 def remove_accents( aString, encoding='utf-8' ):
-    #next instruction is not necessary in Python3
-    #aString_unicode = to_unicode( aString, encoding )
     aString_unicode = aString
     nfkd_form = unicodedata.normalize( 'NFKD', aString_unicode )
     only_ascii_form = nfkd_form.encode( 'ascii', 'ignore' ).decode( encoding )
@@ -55,21 +51,18 @@ def generateBasket( fileNameIN ):
     basket = {}
     all_itemset = {}
     len_itemset = 0
-    #with open( fileNameIN, 'rb' ) as f:
     with open( fileNameIN ) as f:
         reader = csv.reader( f, delimiter=';', quoting=csv.QUOTE_NONE )
         for row in reader:
-            #print( row )
             
             transactionID = row[ indexTransaction ]
-            #if transactionID not in basket.keys():
+
             if transactionID not in basket:
                 basket[ transactionID ] = {}
 
             itemID = row[ indexItem ]
             itemID = normalizeString( str( itemID ) )
             
-            #if itemID not in basket[ transactionID ].keys():
             if itemID not in basket[ transactionID ]:
                 basket[ transactionID ][ itemID ] = 0
             basket[ transactionID ][ itemID ] += 1
@@ -160,7 +153,7 @@ def generateDataFile_tab( basket, all_itemset, fileNameOUT ):
 
 
 #_______________________________________________________________________________
-# the main of this module (in case this module is imported from another module)
+# the main of this module
 if __name__=="__main__":
     # assumption: the CSV file does not contain the header line
     # (make sure that the export script does not generate the CSV header)

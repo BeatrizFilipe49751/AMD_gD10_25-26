@@ -33,19 +33,12 @@ def explore_rules(supports, confidences, X, maxR):
                 if len(rules) >= maxR:
                     # Stop early if reached maxR rules
                     exceeded = True
+                    print(f"    Exceeded maxR={maxR} rules at confidence={confidence}")
                     break
             
             if not exceeded and rules: # accept only if <= maxR
                 results.append((support, confidence, dict_setOf_itemset, rules))
                 print(f"  Support={support}, Confidence={confidence} → {len(rules)} rules")
-            
-            # Generate association rules from the frequent itemsets with the current confidence
-            #setOf_rule = association_rules( dict_setOf_itemset, confidence )
-            #list_setOf_rule = list( setOf_rule )
-            #print(f"    confidence={confidence} → {len(list_setOf_rule)} rules")
-
-            #if 0 < len(list_setOf_rule) <= maxR:
-            #    results.append((support, confidence, dict_setOf_itemset, list_setOf_rule))
 
     return results
 
@@ -92,8 +85,9 @@ if __name__ == "__main__":
     print(f"Maximum number of rules allowed: {maxR}")
     
     # The support and confidence ranges to explore
-    supports = [3]  # Example: supports 2, 3, and 4
-    confidences = [0.95, 0.9, 0.8]  # Example: confidences 60%, 70%, 90%, and 95%
+    supports = [80, 70, 60]  # Example: supports 80, 70 and 60
+    confidences = [0.95, 0.9, 0.85]  # Example: confidences 95%, 90% and 85%
+    
 
     results = explore_rules(supports, confidences, X, maxR)
     
