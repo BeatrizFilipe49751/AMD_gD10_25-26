@@ -10,7 +10,7 @@
 
 ## Project Goal
 
-This project addresses the challenge proposed by We-Commerce: generating business knowledge from large-scale e-commerce browsing data. Acting as SoftKnow, we analyze, model, and validate a complete data-mining pipeline that transforms raw event data into actionable knowledge using:
+This project addresses the challenge proposed by We-Commerce: generating business knowledge from large-scale e-commerce browsing data. Acting as SoftKnow, we analyze, model, and validate a complete data-mining process that transforms raw event data into actionable knowledge using:
 * SQL (PostgreSQL) for data aggregation and filtering
 * Python for data transformation and automation
 * Orange Data Mining for association rule discovery and visualization
